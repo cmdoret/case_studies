@@ -23,6 +23,8 @@ GPL = gse.gpls.values()[0]
 pivoted_samples = gse.pivot_samples('VALUE')
 pivoted_samples.set_index(GPL.table.SPOT_ID, inplace=True)
 
+pivoted_samples.hist(log=True)
+
 strata = pd.read_csv("phylostrata.txt", sep="\t", header=None)
 strata.columns = ["GeneID", "ProbeID", "age"]
 strata.set_index("ProbeID", inplace=True)
@@ -49,9 +51,21 @@ for d, col_list in experiment_index.iteritems():
     stages.append(char_pd[char_pd.index.isin(col_list)].stage[0])
 
 mean_data = pd.DataFrame(set_mean)
+
 mean_data.plot()
 
-mean_data["age"] = unique_data["age"]
-
 # ===============
-# Calculating TAI
+# Calculating TAI:
+
+TAI = []
+for s in mean_data.iteritems():
+    expr_sum = sum(s[1])
+    gcount = 0
+    gene_TAI = 0
+    for r in s[1]:
+        gene_TAI += r*unique_data.age[gcount]
+        gcount += 1
+    TAI.append(gene_TAI/expr_sum)
+
+plt.plot(TAI)
+plt.xlabel()
