@@ -23,7 +23,7 @@ GPL = gse.gpls.values()[0]
 pivoted_samples = gse.pivot_samples('VALUE')
 pivoted_samples.set_index(GPL.table.SPOT_ID, inplace=True)
 
-pivoted_samples.hist(log=True)
+pivoted_samples.hist()
 
 strata = pd.read_csv("phylostrata.txt", sep="\t", header=None)
 strata.columns = ["GeneID", "ProbeID", "age"]
@@ -69,3 +69,17 @@ for s in mean_data.iteritems():
 
 plt.plot(TAI)
 plt.xlabel()
+
+# ==============
+# Same thing with matrix multiplication:
+
+age_indices = unique_data.age
+expression_data = mean_data.values
+product = np.dot(expression_data.T, age_indices)
+mean_expression = expression_data.T.sum(1)
+TAI = np.divide(product, mean_expression)
+TAI = np.divide(product, mean_expression)
+
+plt.plot(TAI)
+plt.show()
+plt.savefig("TAI.png")
