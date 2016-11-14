@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 probes_conv = GEOparse.parse_GSM(
     "/home/cyril/Documents/Master/sem_1/Case_study/module1/data/GPL6457_old_annotations.txt.gz")
 
@@ -23,7 +24,7 @@ GPL = gse.gpls.values()[0]
 pivoted_samples = gse.pivot_samples('VALUE')
 pivoted_samples.set_index(GPL.table.SPOT_ID, inplace=True)
 
-pivoted_samples.hist()
+#pivoted_samples.hist()
 
 strata = pd.read_csv("phylostrata.txt", sep="\t", header=None)
 strata.columns = ["GeneID", "ProbeID", "age"]
@@ -51,7 +52,6 @@ for d, col_list in experiment_index.iteritems():
     stages.append(char_pd[char_pd.index.isin(col_list)].stage[0])
 
 mean_data = pd.DataFrame(set_mean)
-
 mean_data.plot()
 
 # ===============
@@ -70,6 +70,33 @@ for s in mean_data.iteritems():
 plt.plot(TAI)
 plt.xlabel()
 
+# =============
+# With log transformation
+TAI = []
+for s in np.log(mean_data).iteritems():
+    expr_sum = sum(s[1])
+    gcount = 0
+    gene_TAI = 0
+    for r in s[1]:
+        gene_TAI += r*unique_data.age[gcount]
+        gcount += 1
+    TAI.append(gene_TAI/expr_sum)
+plt.plot(TAI)
+
+# =============
+
+# ==============
+# Plotting all data in a single histogram
+all_expr = mean_data.values.tolist()
+allflat = [item for sublist in all_expr for item in sublist]
+plt.hist(allflat, bins=200)
+
+# With log:
+
+log_exp = np.log(mean_data.values)
+log_expr = log_exp.tolist()
+logflat = [item for sublist in log_exp for item in sublist]
+plt.hist(logflat, bins=200)
 # ==============
 # Same thing with matrix multiplication:
 
@@ -78,8 +105,9 @@ expression_data = mean_data.values
 product = np.dot(expression_data.T, age_indices)
 mean_expression = expression_data.T.sum(1)
 TAI = np.divide(product, mean_expression)
-TAI = np.divide(product, mean_expression)
 
 plt.plot(TAI)
 plt.show()
 plt.savefig("TAI.png")
+
+TAI.tolist()
