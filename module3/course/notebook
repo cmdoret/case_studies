@@ -1,0 +1,6 @@
+ 
+PDZ domain family bind different peptides. We have a list of PDZ domains and a each domain has a list of ligands.
+
+The ligands are 10bp peptides, while the binding sites are sequences of 17bp that are not necessarily close to each other in the primary sequence (those are the closest in space to the ligand).
+
+X represent a missing (unknnown?) sequence

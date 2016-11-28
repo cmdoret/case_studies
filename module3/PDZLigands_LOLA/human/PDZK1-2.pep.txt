@@ -1,0 +1,22 @@
+Gene Name	PDZK1
+Accession	Refseq:NP_002605
+Organism	Homo Sapiens (Human)
+NCBITaxonomyID	9606
+Domain Number	2
+Domain Type	PDZ
+Interpro ID	IPR001478
+Technique	Phage Display High Valency
+Domain sequence	LCYLVKEGGSYGFSLKTVQGKKGVYMTDITPQGVAMRAGVLADDHLIEVNGENVEDASHEEVVEKVKKSGSRVMFLL
+Domain Range	135-212
+Comment	
+PeptideName	Peptide	CloneFrequency	QuantData	ExternalIdentifier
+1	XXFKIKVTRF	20
+2	XXNVTRITKF	9
+3	TLGKVTITKF	30
+4	XXXXXKITRF	2
+5	LGRILKVTKF	3
+6	HSGRIKVTRF	1
+7	XXXFLKITKF	1
+8	XXXTVKIHRF	1
+9	XXILSKVTLF	2
+10	TVRKVTITKF	1

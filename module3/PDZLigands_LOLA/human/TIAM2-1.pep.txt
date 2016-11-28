@@ -1,0 +1,21 @@
+Gene Name	TIAM2
+Accession	Refseq:NP_036586 UniProt:Q59EY7
+Organism	Homo Sapiens (Human)
+NCBITaxonomyID	9606
+Domain Number	1
+Domain Type	PDZ
+Interpro ID	IPR001478
+Technique	Phage Display High Valency
+Domain sequence	DVQLTKTGSVCDFGFAVTAQVDERQHLSRIFISDVLPDGLAYGEGLRKGNEIMTLNGEAVSDLDLKQMEALFSEKSVGLTL
+Domain Range	266-347
+Comment	
+PeptideName	Peptide	CloneFrequency	QuantData	ExternalIdentifier
+1	SRPSYRSTRV	23
+2	KLKCWRQTSV	3
+3	XXXSWKETRV	2
+4	XLHFWRESSV	2
+5	VGKLRRHTSV	2
+6	SRPTSLTSWV	1
+7	LLAGWRTTRV	1
+8	SRPSYRSTRV	2
+A	ACYPGSWVYP	1

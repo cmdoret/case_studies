@@ -1,0 +1,18 @@
+Gene Name	LIN7A
+Accession	Refseq:NP_004655 UniProt:O14910
+Organism	Homo Sapiens (Human)
+NCBITaxonomyID	9606
+Domain Number	1
+Domain Type	PDZ
+Interpro ID	IPR001478
+Technique	Phage Display High Valency
+Domain sequence	VVELPKTDEGLGFNVMGGKEQNSPIYISRIIPGGVAERHGGLKRGDQLLSVNGVSVEGEHHEKAVELLKAAKDSVKLVV
+Domain Range	108-187
+Comment	
+PeptideName	Peptide	CloneFrequency	QuantData	ExternalIdentifier
+1	XSSVWKETRV	2
+2	LLRRWFETRV	2
+3	YIMSKYETRV	1
+4	SLWTWLESRV	1
+5	KVRHWLETTL	1
+6	KPSWWICTRV	1

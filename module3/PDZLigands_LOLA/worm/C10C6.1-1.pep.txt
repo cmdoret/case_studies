@@ -1,0 +1,20 @@
+Gene name	C10C6.1
+Accession	RefSeq:NP_502161 UniProt:P90744
+Organism	Caenorhabditis elegans (nematode)
+NCBITaxonomyID	6239
+Domain Number	1
+Domain Type	PDZ
+Interpro ID	IPR001478
+Technique	Phage Display High Valency
+Domain sequence	AASSSTAPSKTITIRKGPFGFGFTLKSVRVYLGEHSEYYTIEHIVTAVVEGSPAFHANLQAEDMITHVNGHPVHNLTHPQLMHRLLANGNELILRLVPLANTSIREGAAR
+Domain Range	974-1060
+Comment	
+PeptideName	Peptide	CloneFrequency	QuantData	ExternalIdentifier
+1	KCIDIWISRL	46
+2	LRVFDGCSDL	9
+3	LRILLGISRL	5
+4	RRFLEGVSSL	6
+5	RRTVIGISSL	21
+A	XXXXXXXKCI	2
+7	FRFIIGRSRL	1
+8	RRRCEGISSL	2

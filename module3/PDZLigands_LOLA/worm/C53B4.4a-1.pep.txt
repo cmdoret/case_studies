@@ -1,0 +1,16 @@
+Gene name	C53B4.4a
+Accession	RefSeq:NP_501559 UniProt:Q18798
+Organism	Caenorhabditis elegans (nematode)
+NCBITaxonomyID	6239
+Domain Number	1
+Domain Type	PDZ
+Interpro ID	IPR001478
+Technique	Phage Display High Valency
+Domain sequence	NEEQGHVVNVLLTFSRYDVSSPIGLVFDKNVAATGNNTNRAVKVCTVEDNSLADKAAFKPGDVLVAINNVPIRSERQATRFLQSTTGDLTVLVERSLDDIDEEESKG
+Domain Range	501-584
+Comment	
+PeptideName	Peptide	CloneFrequency	QuantData	ExternalIdentifier
+1	XXXXIFNYFC	1
+2	RRNAFFDWLC	19
+3	LSRFFGGWFC	1
+4	FFGPAGSWWC	1

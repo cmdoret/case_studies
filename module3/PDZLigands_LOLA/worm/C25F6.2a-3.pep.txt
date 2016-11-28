@@ -1,0 +1,21 @@
+Gene name	C25F6.2a
+Accession	RefSeq:NP_508928 UniProt:Q18165
+Organism	Caenorhabditis elegans (nematode)
+NCBITaxonomyID	6239
+Domain Number	3
+Domain Type	PDZ
+Interpro ID	IPR001478
+Technique	Phage Display High Valency
+Domain sequence	SSQAPIAIPLEPRPVQLVKGQNGLGFNIVGGEDNEPIYISFVLPGGVADLSGNVKTGDVLLEVNGVVLRNATHKEAAEALRNAGNPVYLTLQYRPQEYQIFESKI
+Domain Range	510-588
+Comment	
+PeptideName	Peptide	CloneFrequency	QuantData	ExternalIdentifier
+1	RRKCWTVTSV	48
+2	SRRRWPETRV	1
+3	PKKSWFETSV	17
+4	RIRNRLETTL	2
+5	TARPRRETSV	1
+6	SRRRWPETSV	2
+7	STRRWLCTRV	1
+8	QRRSWLTTYI	1
+9	LKRWYRETSV	1
