@@ -1,0 +1,123 @@
+presentation
+========================================================
+author: 
+date: 
+autosize: true
+
+4 types of Gastric adenocarcinoma
+========================================================
+
+For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+
+- Epstein-Barr virus positive
+- Microsatellite instability
+- Genomically stable
+- Chromosomal instability
+
+General Characteristics
+========================================================
+```{r, echo=F}
+```{r, figure2a, echo=F,out.height="400px", out.width = "400px"}
+
+knitr::include_graphics("./jobs_presidency.png")
+
+```
+
+
+Characteristic mutations
+========================================================
+
+```{r, figure2a, echo=F,out.height="400px", out.width = "400px"}
+
+knitr::include_graphics("./jobs_presidency.png")
+
+```
+
+Pathway
+========================================================
+
+```{r, figure2a, echo=F,out.height="400px", out.width = "400px"}
+
+knitr::include_graphics("./jobs_presidency.png")
+
+```
+
+Slide With Code
+========================================================
+
+```{r, echo=F}
+source('memo_test_methods.R', chdir=TRUE)
+STAD <- read.table("data/STAD_gene_GAM.txt",header=T,row.names=1)
+freq.stad <- rowSums(STAD) 
+par(mfrow=c(2,1))
+plot(sort(freq.stad),type='b',xaxt="n",xlab="",ylab="Number of Altered Cases",main="Alteration Distribution per Gene")
+axis(1,at=c(1:nrow(STAD)), labels=rownames(STAD)[order(rowSums(STAD))] ,las=2,cex.axis=0.4)
+sample.stad <- colSums(STAD) 
+plot(sort(sample.stad),type='b',xaxt="n",xlab="",ylab="Number of Altered genes",main="Alteration Distribution per Case")
+axis(1,at=c(1:ncol(STAD)), labels=colnames(STAD)[order(colSums(STAD))] ,las=2,cex.axis=0.4)
+
+```
+
+Sampling everything
+========================================================
+
+```{r, echo=FALSE}
+mEBV <- c("PIK3CA","PDCD1LG2", "CDKN2A","CD274")
+mMSI <- c("RASA1","KRAS","PIK3CA","PTEN")
+mGS <- c("RHOA","CDH1")
+mCIN <- c("TP53","ERBB2","KRAS")
+mCTRL <- c("TP53","PTEN","CDH1","CDK6")
+m1 = c("RHOA","RASA1","KRAS")
+m2 = c("PIK3CA","PTEN","PIK3R1")
+modules <- list(mEBV,mMSI,mGS,mCIN,mCTRL,m1,m2)
+
+
+data.preserve.none <- memoData(STAD, Q=100, N=1000, permuteFun=permute.preserve.none, verbose=TRUE)
+results = testModules(data.preserve.none, modules)
+
+out <-summary(results)
+propre_none <-cbind(moduleNames=c("Control","m1","Chrom. instability","Microsat. instability","EBV","Genomically stable","m2"),out)
+print(propre_none)
+
+```
+
+Preserving rows
+========================================================
+
+```{r echo=F}
+data.preserve.gene <- memoData(STAD, Q=100, N=1000, permuteFun=permute.preserve.gene, verbose=TRUE)
+results = testModules(data.preserve.gene, modules)
+
+out <-summary(results)
+propre_gene <-cbind(moduleNames=c("Control","m1","Chrom. instability","Microsat. instability","EBV","Genomically stable","m2"),out)
+print(propre_gene)
+
+```
+
+
+Preserving columns
+========================================================
+
+```{r echo=F}
+data.preserve.sample <- memoData(STAD, Q=100, N=1000, permuteFun=permute.preserve.sample, verbose=TRUE)
+results = testModules(data.preserve.sample, modules)
+
+out <-summary(results)
+propre_sample <-cbind(moduleNames=c("Control","m1","Chrom. instability","Microsat. instability","EBV","Genomically stable","m2"),out)
+print(propre_sample)
+
+```
+
+
+Preserving both
+========================================================
+
+```{r echo=F}
+data.preserve.both <- memoData(STAD, Q=100, N=1000, permuteFun=permute.preserve.both, verbose=TRUE)
+results = testModules(data.preserve.sample, modules)
+
+out <-summary(results)
+propre_both <-cbind(moduleNames=c("Control","m1","Chrom. instability","Microsat. instability","EBV","Genomically stable","m2"),out)
+print(propre_both)
+
+```

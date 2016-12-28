@@ -173,7 +173,7 @@ compFreq <- function(x){
   
   return(m)
 }
-Fig=7
+Fig=2
 pwm.all <- lapply(seq.all, compFreq)
 
 ####################################
