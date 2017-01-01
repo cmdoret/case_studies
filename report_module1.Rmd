@@ -1,0 +1,46 @@
+---
+title: "Report: Case Studies in Bioinformatics, Module 1"
+author: "Cyril Matthey-Doret"
+date: "1 janvier 2017"
+output: pdf_document
+---
+
+## Background
+
+Ontogeny is the development of an organism from egg fertilization to its mature state. It requires expression of different genes at each stage of development, associated with phenotypic changes. There is a lot of discussion on how these sets of genes differ between species. The earliest studies of embryogenesis performed by Karl Ernst Ritter von Baer in the 19th century suggested that the most similar state of development between related species, also known as the phylotypic stage, happens at the earliest stages of embryogenesis. This lead to what is called the funnel model. However, more recent work has shown that this convergence happens later, earliest stages being more different between species, giving rise to the hourglass model. It is now possible to test these models by combining gene expression data at different stages of embryogenesis and phylogenetic information for the concerned genes to better study the differences in expressed genes between species. Here, I investigate a study relying on an approach termed phylostratigraphy, which consists in tracing the origin of specific genes through similarity searches. This allows to build a phylogenetic tree where each gene has a rank that estimates their age. These ranks can be used to get a metric of age for the whole transcriptome at each developmental stage, called Transcriptome Age Index (TAI). Results obtained in this study support the hourglass model, focusing on expression datasets from the zebrafish _Danio rerio_, Drosophilia, the mosquito _Anopheles_ and the nematode _Caenorhabditis elegans_. In this report, I use forensic bioinformatics to repeat the analysis from [Domazet-Lošo et Tautz, 2010](http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html) to have a critical view of each step and a better understanding of their results. Finally, I propose improvements for the analysis, explaining how it would affect the results.
+
+## Methods
+
+I reproduced the analysis from the paper using python 2 with the modules panda, numpy and GEOparse. I used expression data from _Danio rerio_ (zebrafish) to reproduce the results shown in figure 1a of the paper. Expression data for zebrafish was obtained from [Domazet-Lošo et Tautz (2010)](http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html) and phylostrata were obtained from [Šestak et al, 2013](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3636138/). The first step was to format the expression data from microarray and find the gene ID corresponding to the spots ID in the microarray. This information can be obtained via the GEO platform (GPL) annotation file.
+
+```{python parse_expression, echo=F, warning=F, message=F}
+#!pip install GEOparse
+import matplotlib.pylab as plt
+import numpy as np
+import pandas as pd
+import GEOparse
+
+probes_conv = GEOparse.parse_GSM("/home/cyril/Documents/Master/sem_1/Case_study/module1/data/GPL6457_old_annotations.txt.gz")
+
+try:
+    gse = GEOparse.get_GEO(filepath="./GSE24616.soft.gz", silent=True)
+except IOError:
+    gse = GEOparse.get_GEO("GSE24616",destdir="./", silent=True)
+# Using GEOparse inbuilt tools to parse the Gene series expression data for zebrafish.
+# If the file is not found, it is downloaded first, otherwise it is parsed directly
+
+char = {"stage": [], "time": [], "sex": [], "sample_name": []}
+# Initializing dictionary object to store metadata
+
+for gsm_name, gsm in sorted(gse.gsms.iteritems()): 
+    char["stage"].append(gsm.metadata['characteristics_ch1'][1].split(": ")[1])
+    char["time"].append(gsm.metadata['characteristics_ch1'][2].split(": ")[1])
+    char["sex"].append(gsm.metadata['characteristics_ch1'][3].split(": ")[1])
+    char["sample_name"].append(gsm.name)
+# Formatting parsed metadata in a structured dictionary object
+
+GPL = gse.gpls.values()[0]
+pivoted_samples = gse.pivot_samples('VALUE')
+pivoted_samples.set_index(GPL.table.SPOT_ID, inplace=True)
+# Transforming microarray IDs into genes using platform annotations
+```

@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-probes_conv = GEOparse.parse_GSM(
+probes_conv = GEOparse.parse_GSM(\
     "/home/cyril/Documents/Master/sem_1/Case_study/module1/data/GPL6457_old_annotations.txt.gz")
 
 
@@ -26,7 +26,7 @@ pivoted_samples.set_index(GPL.table.SPOT_ID, inplace=True)
 
 #pivoted_samples.hist()
 
-strata = pd.read_csv("phylostrata.txt", sep="\t", header=None)
+strata = pd.read_csv("../phylostrata.txt", sep="\t", header=None)
 strata.columns = ["GeneID", "ProbeID", "age"]
 strata.set_index("ProbeID", inplace=True)
 
