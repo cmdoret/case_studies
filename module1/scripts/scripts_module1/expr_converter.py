@@ -3,10 +3,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
-probes_conv = GEOparse.parse_GSM(\
+probes_conv = GEOparse.parse_GSM( \
     "/home/cyril/Documents/Master/sem_1/Case_study/module1/data/GPL6457_old_annotations.txt.gz")
-
 
 gse = GEOparse.get_GEO("GSE24616", destdir="./")
 # gse = GEOparse.get_GEO(filepath="./GSM606890.TXT.GZ.soft")
@@ -24,7 +22,7 @@ GPL = gse.gpls.values()[0]
 pivoted_samples = gse.pivot_samples('VALUE')
 pivoted_samples.set_index(GPL.table.SPOT_ID, inplace=True)
 
-#pivoted_samples.hist()
+# pivoted_samples.hist()
 
 strata = pd.read_csv("../phylostrata.txt", sep="\t", header=None)
 strata.columns = ["GeneID", "ProbeID", "age"]
@@ -43,7 +41,8 @@ time_stamps = char_pd.time.unique()
 for i in xrange(len(time_stamps)):
     char_pd.loc[char_pd.time == time_stamps[i], "timing_number"] = i + 1
 
-experiment_index = char_pd[char_pd.index.isin(mixed)].reset_index().groupby("timing_number")["index"].apply(lambda x: np.array(x))
+experiment_index = char_pd[char_pd.index.isin(mixed)].reset_index().groupby("timing_number")["index"].apply(
+    lambda x: np.array(x))
 
 set_mean = {}
 stages = []
@@ -63,13 +62,29 @@ for s in mean_data.iteritems():
     gcount = 0
     gene_TAI = 0
     for r in s[1]:
-        gene_TAI += r*unique_data.age[gcount]
+        gene_TAI += r * unique_data.age[gcount]
         gcount += 1
-    TAI.append(gene_TAI/expr_sum)
+    TAI.append(gene_TAI / expr_sum)
 
 plt.plot(TAI)
-plt.xlabel()
+plt.xlabel("Time stamp")
+plt.ylabel("TAI")
+my_colorlist = ['#ff0000', '#ff6a00', '#ffb700', '#91ff00', '#00ff59',
+                '#00ffbf', '#00bbff', '#aa00ff', '#e205ff','#ff05c9',
+                '#940047']
 
+def order_uniq(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
+
+col_count = 0
+for t in order_uniq(stages):
+    plt.axvline(x=stages.index(t), color=my_colorlist[col_count], label=t)
+    col_count += 1
+
+legend = plt.legend(loc=(0.29,0.5), shadow=True, fontsize='x-small')
+legend.get_frame().set_facecolor('#dddddd')
 # =============
 # With log transformation
 TAI = []
@@ -78,9 +93,9 @@ for s in np.log(mean_data).iteritems():
     gcount = 0
     gene_TAI = 0
     for r in s[1]:
-        gene_TAI += r*unique_data.age[gcount]
+        gene_TAI += r * unique_data.age[gcount]
         gcount += 1
-    TAI.append(gene_TAI/expr_sum)
+    TAI.append(gene_TAI / expr_sum)
 plt.plot(TAI)
 
 # =============
@@ -92,7 +107,6 @@ allflat = [item for sublist in all_expr for item in sublist]
 plt.hist(allflat, bins=200)
 
 # With log:
-
 log_exp = np.log(mean_data.values)
 log_expr = log_exp.tolist()
 logflat = [item for sublist in log_exp for item in sublist]
