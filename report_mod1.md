@@ -141,7 +141,7 @@ legend.get_frame().set_facecolor('#dddddd')
 
 \begin{figure}[h!]
   \center
-  \includegraphics[width=0.8\textwidth]{./module1/images/TAI.png}
+  \includegraphics[width=0.7\textwidth]{./module1/images/TAI.png}
   \caption{TAI as calculated in the original paper. Time stamps represent each unique value for the age of samples in chronological order. These values are ranks and the age does not increase with them in a linear manner. The vertical lines represent the start of each developmental stage defined as the first time stamp at which the stage was observed.}
 \end{figure}
 
@@ -154,17 +154,17 @@ As expected, when plotting the distribution of the whole gene expression data in
 
 \begin{figure}
   \center
-  \includegraphics[width=0.7\textwidth]{./module1/images/expr_hist.png}
+  \includegraphics[width=0.65\textwidth]{./module1/images/expr_hist.png}
   \caption{Distribution of gene expression across all samples.}
 \end{figure}
-\FloatBarrier
 
-A common way to solve the outlier problem is to log-transform the expression values. This reduces the distance with outliers and would be interesting here, as this would reduce the weight of strongly expressed genes on the TAI. The distribution of log transformed expression looks like this: 
+
+A common way to solve the outlier problem is to log-transform the expression values (Figure 3). This reduces the distance with outliers and would be interesting here, as this would reduce the weight of strongly expressed genes on the TAI. 
 
 
 \begin{figure}
   \center
-  \includegraphics[width=0.7\textwidth]{./module1/images/log_hist.png}
+  \includegraphics[width=0.65\textwidth]{./module1/images/log_hist.png}
   \caption{Distribution of log-transformed gene expression across all samples.}
 \end{figure}
 \FloatBarrier
@@ -189,14 +189,6 @@ TAI = np.divide(product, mean_expression)
 plt.plot(TAI)
 plt.xlabel("Time stamp")
 plt.ylabel("TAI")
-my_colorlist = ['#ff0000', '#ff6a00', '#ffb700', '#91ff00', '#00ff59',
-                '#00ffbf', '#00bbff', '#aa00ff', '#e205ff','#ff05c9',
-                '#940047']
-def order_uniq(seq):
-    # Function allowing to get each unique list element and preserve the order
-    seen = set()
-    seen_add = seen.add
-    return [x for x in seq if not (x in seen or seen_add(x))]
 
 col_count = 0
 for t in order_uniq(stages):
@@ -216,7 +208,7 @@ legend.get_frame().set_facecolor('#dddddd')
 \end{figure}
 
 
-Log-transforming the expression dramatically changes the results (Figure 3), showing these outliers genes had a strong impact on the TAI value. The lowest TAI are now at the very begining of development and the transcriptome becomes younger with time. This would be in accordance with the funnel model, proposing that the phylotypic stage is at the very beginning of ontogeny.
+Log-transforming the expression dramatically changes the results (Figure 4), showing these outliers genes had a strong impact on the TAI value. The lowest TAI are now at the very begining of development and the transcriptome becomes younger with time. This would be in accordance with the funnel model, proposing that the phylotypic stage is at the very beginning of ontogeny.
 
 \FloatBarrier
 
