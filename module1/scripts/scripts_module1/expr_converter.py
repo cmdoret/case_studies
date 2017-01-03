@@ -125,3 +125,11 @@ plt.show()
 plt.savefig("TAI.png")
 
 TAI.tolist()
+
+
+
+fig = plt.figure()
+mf = plt.plot(TAI)
+ax1 = fig.add_subplot(211)
+
+plt.show()
