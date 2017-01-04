@@ -2,6 +2,7 @@
 output: pdf_document
 header-includes:
    - \usepackage{placeins}
+urlcolor: blue
 ---
 
 # Case Studies in Bioinformatics
@@ -9,11 +10,11 @@ _Cyril Matthey-Doret, December 2016_
 
 ## Background
 
-Ontogeny is the development of an organism from egg fertilization to its mature state. It is driven by expression of different genes at each stage of development, associated with phenotypic changes. There is a lot of discussion on how these sets of genes differ between species. The earliest studies of embryogenesis, performed by Karl Ernst Ritter von Baer in the 19th century, suggested that the most similar state of development between related species, also known as the phylotypic stage, happens at the earliest stages of embryogenesis. This lead to what is called the funnel model, proposing that related species are very similar at the onset of embryogenesis and diverge as they develop. However, more recent work has shown that this convergence happens later, earliest stages being more different between species, this gave rise to the hourglass model. Both the funnel and hourglass model were based on morphological observations, but it is now possible to test these models by combining gene expression data at different stages of embryogenesis with phylogenetic information for the concerned genes to better study the similarity between species. Here, I investigate a study relying on an approach termed phylostratigraphy, which consists in tracing the origin of specific genes through similarity searches. This allows to build a phylogenetic tree where each gene has a rank that estimates their age. These ranks can be used to get a metric of age for the whole transcriptome at each developmental stage, called Transcriptome Age Index (TAI). Results obtained in this study support the hourglass model, focusing on expression datasets from the zebrafish _Danio rerio_, Drosophilia, the mosquito _Anopheles_ and the nematode _Caenorhabditis elegans_. In this report, I use forensic bioinformatics to repeat the analysis from [Domazet-Lošo et Tautz, 2010](http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html) in zebrafish to have a critical view of each step and a better understanding of their results. Finally, I propose improvements for the analysis, explaining how it would affect the results.
+Ontogeny is the development of an organism from egg fertilization to its mature state. It is driven by expression of different genes at each stage of development, associated with phenotypic changes. There is a lot of discussion on how these sets of genes differ between species. The earliest studies of embryogenesis, in the 19th century, suggested that the most similar state of development between related species happens at the earliest stages of embryogenesis. This lead to what is called the funnel model, proposing that related species are very similar at the onset of embryogenesis and diverge as they develop. However, more recent work suggested that this convergence, also known as the phylotypic stage, happens later, earliest stages being more different between species. This gave rise to the hourglass model. Both the funnel and hourglass model were based on morphological observations, but it is now possible to test these models by combining gene expression data at different stages of embryogenesis with phylogenetic information for the concerned genes to better study the similarity between species. Here, we investigate a study ([Domazet-Lošo et Tautz, 2010](http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html)) relying on an approach termed phylostratigraphy, which consists in tracing the origin of specific genes through similarity searches between species. This allows to build a phylogenetic tree where each gene has a rank that estimates their age. These ranks can be used to get a metric of age for the whole transcriptome at each developmental stage, called Transcriptome Age Index (TAI). Results obtained in this study support the hourglass model, focusing on expression datasets from the zebrafish _Danio rerio_, Drosophilia, the mosquito _Anopheles_ and the nematode _Caenorhabditis elegans_. In this report, we use forensic bioinformatics to repeat the analysis from [Domazet-Lošo et Tautz, 2010](http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html) in zebrafish to have a critical view of each step and a better understanding of their results. Finally, we propose improvements for the analysis, explaining how it would affect the results.
 
 ## Methods
 
-I reproduced the analysis from the paper using python 2 with the modules panda, numpy, matplotlib and GEOparse. I used expression data from _Danio rerio_ (zebrafish) to reproduce the results shown in figure 1a of the paper. Expression data for zebrafish was made available by the authors and phylostrata dataset were obtained from the University of Lausanne Computational Biology Group website. The first step was to load the expression data from microarray experiments and extract meaningful informations for each sample (developmental stage, age and sex). The expression data was then formatted and annotated with microarray spot ID using the GEO platform (GPL) annotation file. Throughout the whole report, "expression" refers to the microarray signal intensity value and therefore has no unit.
+We reproduced the analysis from the paper using python 2.7 with the modules panda, numpy, matplotlib and GEOparse. We used expression data from _Danio rerio_ (zebrafish) to reproduce the results shown in figure 1a of [Domazet-Lošo et Tautz, 2010](http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html). Expression data for zebrafish was made available by the authors and phylostrata dataset were obtained from the University of Lausanne Computational Biology Group website. The first step was to load the expression data from microarray experiments and extract meaningful informations from the metadata for each sample (developmental stage, age and sex). The expression data was then formatted and annotated with microarray spot ID using the GEO platform (GPL) annotation file. Throughout the whole report, "expression" refers to the microarray signal intensity value and therefore has no unit.
 
 
 ```python
@@ -50,7 +51,7 @@ pivoted_samples.set_index(GPL.table.SPOT_ID, inplace=True)
 
 ```
 
-Next, I imported the phylostrata and merged it with expression data by spot ID. Since the phylostrata data file contains both spots ID and associated genes ID, there is no need for an additional conversion step. As certain genes were represented multiple times, I used the mean expression for these duplicate genes in each sample. I then generated time stamps corresponding to the different values of samples. There are 61 time stamps represented by integers assigned in chronological order, matching all of the unique age values from samples. For later use, I computed the mean expression of each gene across all samples at each time stamp.
+Next, we imported the phylostrata and merged it with expression data by spot ID. Since the phylostrata data file contains both spots ID and associated genes ID, there is no need for an additional conversion step. As certain genes were represented multiple times, we used the mean expression for these duplicate genes in each sample. We then generated time stamps corresponding to the different ages of samples. There are 61 time stamps represented by integers assigned in chronological order, matching all of the unique age values from samples in the dataset. For later use, we computed the mean expression of each gene across all samples at each time stamp.
 
 
 ```python
@@ -99,7 +100,7 @@ mean_data = pd.DataFrame(set_mean)
 
 ## Results
 
-From this data structure containing the mean expression of every gene at a given time stamp, I calculated the transcriptome age index (TAI) at each time stamp "s", as described in the paper methods: \begin{equation*}TAI_s=\frac{\sum_{i=1}^n ps_ie_i}{\sum_{i=1}^n e_i}\end{equation*} where $ps_i$ is the phylostratum of gene i and $e_i$ is its expression.
+From this data structure containing the mean expression of every gene at a given time stamp, we calculated the transcriptome age index (TAI) at each time stamp "s", as described in the paper methods: \begin{equation*}TAI_s=\frac{\sum_{i=1}^n ps_ie_i}{\sum_{i=1}^n e_i}\end{equation*} where $ps_i$ is the phylostratum of gene i and $e_i$ is its expression.
 
 
 ```python
@@ -146,9 +147,9 @@ legend.get_frame().set_facecolor('#dddddd')
 \end{figure}
 
 
-When plotting the TAIs calculated as described in the paper (Figure 1), I obtained rather similar results. On the figure presented in this report, the vertical lines represent the earliest time stamp at which a developmental stage was observed. This figure depicts what one would expect from the hourglass model, as the lowest TAIs (i.e. the transcriptome with the oldest genes, or phylotypic stage) are located in the middle, from the segmentation to the larval state.
+When plotting the TAIs calculated as described in the paper (Figure 1), we obtained rather similar results. On the figure presented in this report, the vertical lines represent the earliest time stamp at which a developmental stage was observed. This figure depicts what one would expect from the hourglass model, as the lowest TAIs (i.e. the transcriptome with the oldest genes, or phylotypic stage) are located in the middle, from the segmentation to the larval state.
 
-However, there is an issue in the way gene expression values affect the TAI: Distributions of gene expressions are usually made of many lowly expressed genes, and a few outliers that are highly expressed.  Since the TAI directly depends on the product of gene expression by phylostrata, those few outliers will dictate the TAIs. 
+However, there is a bias in the way gene expression values affect the TAI: Distributions of gene expressions are usually made of many lowly expressed genes, and a few outliers that are highly expressed.  Since the TAI directly depends on the product of gene expression by phylostrata, those few outliers will dictate the TAIs. 
 
 As expected, when plotting the distribution of the whole gene expression data in the zebrafish dataset (Figure 2), most genes have low expression values, and there are outliers with much higher values (the maximum expression observed was 388'818.64).
 
@@ -169,7 +170,7 @@ A common way to solve the outlier problem is to log-transform the expression val
 \end{figure}
 \FloatBarrier
 
-Finally, I recalculated the TAI using this log-transformed expression data: 
+Finally, we recalculated the TAI using this log-transformed expression data: 
 
 
 ```python
@@ -214,15 +215,19 @@ Log-transforming the expression dramatically changes the results (Figure 4), sho
 
 ## Discussion
 
-This analysis shows the impact normalization and processing steps can have on the results. In this particular case, it is interesting because the original study supports the hourglass model, while the same analysis with normalized data supports the funnel model.
+This analysis shows the impact data normalization and processing steps can have on the results. In this particular case, it is interesting because the original study supports the hourglass model, while the same analysis with normalized data supports the funnel model.
 
-Calculating TAI without log-transforming yields a biased estimation of transcriptome age as it will be dominated by outlier genes. Therefore, the original results would suggest that strongly expressed genes follow the hourglass model, which is also interesting, however this does not apply when giving more weight to lowly expressed genes.
+Calculating TAI without log-transforming yields a biased estimation of transcriptome age as it will be dominated by a few outlier genes. Therefore, the original results would suggest that strongly expressed genes follow the hourglass model, which is also interesting, however this does not apply when giving more weight to lowly expressed genes.
+
+Since the publication of this paper, the bias discussed here has been addressed using a more detailed approach ([Piasecka et al., 2013](http://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1003476)) where sets of genes over-expressed at the same developmental stage are identified and analysed independently. This approach is robust to strongly expressed genes and allows a more detailed analysis. The authors analyzed how different genomic features in the gene sets were constraint throughout development and found that only sequence conservation follows the hourglass model (sequence is more conserved for genes expressed in the mid-developmental stages), whereas expression, age, regulatory elements and orthology relationship are more constraint in early development, thus following the funnel model. This suggests the models can co-exist in different features.
 
 ## References
 
 Šestak, M. S., Božičević, V., Bakarić, R., Dunjko, V., & Domazet-Lošo, T. (2013). Phylostratigraphic profiles reveal a deep evolutionary history of the vertebrate head sensory systems. Frontiers in Zoology, 10, 18. http://doi.org/10.1186/1742-9994-10-18
 
 Domazet-Lošo T, Tautz D. (2010). A phylogenetically based transcriptome age index mirrors ontogenetic divergence patterns. Nature, 468(7325):815-8. http://doi.org/10.1038/nature09632
+
+Piasecka B, Lichocki P, Moretti S, Bergmann S, Robinson-Rechavi M (2013) The Hourglass and the Early Conservation Models—Co-Existing Patterns of Developmental Constraints in Vertebrates. PLOS Genetics 9(4): e1003476. doi: 10.1371/journal.pgen.1003476
 
 ## Data files
 
